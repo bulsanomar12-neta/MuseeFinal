@@ -1,4 +1,4 @@
-package com.example.musee;
+package com.example.musee.Activity;
 
 import android.os.Bundle;
 
@@ -20,6 +20,7 @@ import com.example.musee.Fragments.ForgotPasswordFragment;
 import com.example.musee.Fragments.LogInFragment;
 import com.example.musee.Data.SignUpFragment;
 import com.example.musee.Fragments.UserHomePgFragment;
+import com.example.musee.R;
 import com.example.musee.classes.FirebaseServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

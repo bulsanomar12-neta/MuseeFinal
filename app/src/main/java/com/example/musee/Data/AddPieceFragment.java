@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.musee.Fragments.AllPiecesFragment;
-import com.example.musee.MainActivity;
+import com.example.musee.Activity.MainActivity;
 import com.example.musee.R;
 import com.example.musee.classes.FirebaseServices;
 import com.example.musee.classes.PieceClass;

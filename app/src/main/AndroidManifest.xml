@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Musee">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:exported="true">
 
             <!-- فلتر تشغيل التطبيق (لا تلمسه) -->

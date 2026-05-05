@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 //import com.squareup.picasso.Picasso;
 
-import com.example.musee.MainActivity;
+import com.example.musee.Activity.MainActivity;
 import com.example.musee.Fragments.PieceDetailsFragment;
 import com.example.musee.R;
 import com.example.musee.classes.FirebaseServices;

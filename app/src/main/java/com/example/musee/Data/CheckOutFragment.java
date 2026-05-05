@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.musee.Adapters.AllPiecesAdapter;
 import com.example.musee.Fragments.PieceDetailsFragment;
-import com.example.musee.MainActivity;
+import com.example.musee.Activity.MainActivity;
 import com.example.musee.R;
 import com.example.musee.classes.PieceClass;
 import com.google.firebase.auth.FirebaseAuth;

@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.musee.MainActivity;
+import com.example.musee.Activity.MainActivity;
 import com.example.musee.R;
 import com.example.musee.Adapters.AllPiecesAdapter;
 import com.example.musee.classes.FirebaseServices;

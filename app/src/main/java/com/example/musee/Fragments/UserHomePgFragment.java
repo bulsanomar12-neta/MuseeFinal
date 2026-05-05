@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musee.Adapters.AllPiecesAdapter;
 import com.example.musee.Data.CheckOutFragment;
-import com.example.musee.MainActivity;
+import com.example.musee.Activity.MainActivity;
 import com.example.musee.R;
 import com.example.musee.classes.PieceClass;
 import com.google.android.material.button.MaterialButton;
