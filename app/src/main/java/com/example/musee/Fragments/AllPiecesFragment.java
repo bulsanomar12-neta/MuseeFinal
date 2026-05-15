@@ -53,15 +53,12 @@ public class AllPiecesFragment extends Fragment {
     private LinearLayout searchLayout;
     private EditText searchBar, minPriceEditText, maxPriceEditText;
     private Spinner categorySpinner, sizeSpinner;
+
     private Button btnSearch;
     private ImageButton btnSearchToggle;
 
     private String[] categories = {"Select Category", "Oil painting", "acrylic painting", "watercolor painting",
             "pencil drawing", "digital drawing", "other.."};
-    private String[] sizes = {"Select Size", "A5: 5.8\" × 8.3\" (14.8 × 21 cm)", "A4: 8.3\" × 11.7\" (21 × 29.7 cm)", "A3: 11.7\" × 16.5\" (29.7 × 42 cm)", "A2: 16.5\" × 23.4\" (42 × 59.4 cm)", "A1: 23.4\" × 33.1\" (59.4 × 84.1 cm)",
-            "Letter: 8.5\" × 11\" (21.6 × 27.9 cm)", "Legal: 8.5\" × 14\" (21.6 × 35.6 cm)", "8\" × 10\" (20 × 25 cm)", "9\" × 12\" (23 × 30 cm)", "11\" × 14\" (28 × 35 cm)", "12\" × 16\" (30 × 40 cm)", "14\" × 18\" (35 × 45 cm)", "16\" × 20\" (40 × 50 cm)",
-            "18\" × 24\" (45 × 60 cm)", "20\" × 24\" (50 × 60 cm)", "24\" × 30\" (60 × 75 cm)", "24\" × 36\" (60 × 90 cm)", "30\" × 40\" (75 × 100 cm)", "36\" × 48\" (90 × 120 cm)"
-    };
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -107,31 +104,45 @@ public class AllPiecesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_all_pieces, container, false);
 
-        btHomeAllPiecesFragment = view.findViewById(R.id.btnHomeAllPiecesFragment);
-        rvAllPiecesFragment = view.findViewById(R.id.rvAllPiecesFragment);
+        init(view); // ✅ أهم سطر
 
-        // --- START: ربط إضافات البحث ---
+        // --- SEARCH UI ---
         searchLayout = view.findViewById(R.id.searchLayout);
         searchBar = view.findViewById(R.id.searchBar);
         minPriceEditText = view.findViewById(R.id.minPrice);
         maxPriceEditText = view.findViewById(R.id.maxPrice);
         categorySpinner = view.findViewById(R.id.categorySpinner);
-        sizeSpinner = view.findViewById(R.id.sizeSpinner);
         btnSearch = view.findViewById(R.id.btnSearch);
         btnSearchToggle = view.findViewById(R.id.btnSearchToggle);
 
-        categorySpinner.setAdapter(new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categories));
-        sizeSpinner.setAdapter(new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, sizes));
+        categorySpinner.setAdapter(new ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                categories
+        ));
+
+        sizeSpinner = view.findViewById(R.id.sizeSpinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.types_array_size,
+                android.R.layout.simple_spinner_item
+        );
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sizeSpinner.setAdapter(adapter);
 
         btnSearchToggle.setOnClickListener(v -> {
-            if (searchLayout.getVisibility() == View.GONE) searchLayout.setVisibility(View.VISIBLE);
-            else searchLayout.setVisibility(View.GONE);
+            if (searchLayout.getVisibility() == View.GONE)
+                searchLayout.setVisibility(View.VISIBLE);
+            else
+                searchLayout.setVisibility(View.GONE);
         });
 
         btnSearch.setOnClickListener(v -> performSearch());
-        // --- END: ربط إضافات البحث ---
 
         return view;
     }
@@ -145,9 +156,11 @@ public class AllPiecesFragment extends Fragment {
         String maxText = maxPriceEditText.getText().toString().trim();
 
         boolean catFlag = !cat.equals("Select Category");
-        boolean sizeFlag = !sz.equals("Select Size");
         double min = minText.isEmpty() ? 0 : Double.parseDouble(minText);
         double max = maxText.isEmpty() ? Double.MAX_VALUE : Double.parseDouble(maxText);
+
+        String defaultSize = getResources().getStringArray(R.array.types_array_size)[0];
+        boolean sizeFlag = !sz.equals(defaultSize);
 
         filteredList.clear();
 
@@ -173,20 +186,16 @@ public class AllPiecesFragment extends Fragment {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        init();
-    }
 
-    private void init() {
+    private void init(View view) {
         // Get the MainActivity once to call its public navigation methods
         MainActivity mainActivity = (MainActivity) getActivity();
         if (mainActivity == null) { // Also check if the view is null
             return; // Exit if the activity or view is not available
         }
 
-        btHomeAllPiecesFragment = getView().findViewById(R.id.btnHomeAllPiecesFragment);
+        // 🔥 التعديل هنا فقط: استخدام view بدل getView()
+        btHomeAllPiecesFragment = view.findViewById(R.id.btnHomeAllPiecesFragment);
         btHomeAllPiecesFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,12 +214,15 @@ public class AllPiecesFragment extends Fragment {
             }
         });
 
-        rvAllPiecesFragment = getView().findViewById(R.id.rvAllPiecesFragment);
+        // 🔥 نفس التعديل هنا
+        rvAllPiecesFragment = view.findViewById(R.id.rvAllPiecesFragment);
         //ivProfile = getView().findViewById(R.id.ivProfileCarListMapFragment);
+
         fbs = FirebaseServices.getInstance();
         fbs.setUserChangeFlag(false);
-        /*if (fbs.getAuth().getCurrentUser() == null)
-            fbs.setCurrentUser(fbs.getCurrentObjectUser()); */
+    /*if (fbs.getAuth().getCurrentUser() == null)
+        fbs.setCurrentUser(fbs.getCurrentObjectUser()); */
+
         pieces = new ArrayList<>();
 
         rvAllPiecesFragment.setHasFixedSize(true);

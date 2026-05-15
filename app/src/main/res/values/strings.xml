@@ -3,6 +3,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="types_array">
+        <item>Select Category</item>
         <item>Oil painting</item>
         <item>acrylic painting</item>
         <item>watercolor painting</item>

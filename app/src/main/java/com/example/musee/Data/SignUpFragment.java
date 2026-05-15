@@ -2,6 +2,7 @@ package com.example.musee.Data;
 
 import android.Manifest;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,10 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.musee.Fragments.AllPiecesFragment;
+import com.example.musee.Fragments.LogInFragment;
 import com.example.musee.R;
 import com.example.musee.classes.FirebaseServices;
 import com.example.musee.classes.User;
@@ -41,6 +44,7 @@ public class SignUpFragment extends Fragment {
     private EditText etEmailSignUp, etPasswordSignUp, etConfirmPasswordSignUp, etPhoneNumSignUp, etFirstNameSignUp, etLastNameSignUp, etUserNameSignUp, etAddressSignUp;
     private ImageView imgUserSignUp;
     private Button btSignUp;
+    private ImageButton btnBackFromSignUpToAll;
     private FirebaseServices fbs;
     private UtilsClass util;
     private Uri selectedImage;
@@ -239,6 +243,14 @@ public class SignUpFragment extends Fragment {
                         });
             }
         });
+
+        btnBackFromSignUpToAll = getView().findViewById(R.id.btnBackFromSignUpToAll);
+        btnBackFromSignUpToAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoLogIn();
+            }
+        });
     }
 
     @Override
@@ -253,6 +265,13 @@ public class SignUpFragment extends Fragment {
     {
         FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayOutMain,new AllPiecesFragment());
+        ft.commit();
+    }
+
+    public void gotoLogIn()
+    {
+        FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayOutMain,new LogInFragment());
         ft.commit();
     }
 

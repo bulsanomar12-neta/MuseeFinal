@@ -197,14 +197,15 @@ public class PieceDetailsFragment extends Fragment {
                             });
                 });
 
-                // زر الرجوع (يجب أن يكون خارج زر Add to Cart)
+                // زر الرجوع
                 btnBackFromDetailsToAll.setOnClickListener(v -> {
 
                     if (getActivity() == null) return;
 
+                    //معرفة من أين جاء المستخدم
                     String from = getArguments() != null
                             ? getArguments().getString("from", "all")
-                            : "all";
+                            : "all"; //اذا لا ناخذ ال all
 
                     MainActivity mainActivity = (MainActivity) getActivity();
 
@@ -213,7 +214,7 @@ public class PieceDetailsFragment extends Fragment {
 
                     } else if (from.equals("checkout")) {
                         requireActivity().getSupportFragmentManager().popBackStack();
-                        // أو mainActivity.gotoCheckOutFragment() حسب نظامك
+                        // أو mainActivity.gotoCheckOutFragment()
 
                     } else {
                         mainActivity.gotoAllPiecesFragment();

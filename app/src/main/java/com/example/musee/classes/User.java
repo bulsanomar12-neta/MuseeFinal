@@ -103,7 +103,6 @@ public class User {
 
     public void seteMail(String eMail) {this.eMail = eMail;}
 
-
     public String getPhoto() {
         return photo;
     }
@@ -120,12 +119,13 @@ public class User {
     public void setUserPieces(ArrayList<String> userPieces) {
         this.userPieces = userPieces;
     }
+
     public ArrayList<String> getUserPiecesCart() {
         return userPiecesCart;
     }
 
-    public void setUserPiecesCart(ArrayList<String> userPieces) {
-        this.userPieces = userPiecesCart;
+    public void setUserPiecesCart(ArrayList<String> userPiecesCart) {
+        this.userPiecesCart = userPiecesCart;
     }
 
 }

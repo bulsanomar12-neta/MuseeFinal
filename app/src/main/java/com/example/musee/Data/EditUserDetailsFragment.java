@@ -157,6 +157,8 @@ public class EditUserDetailsFragment extends Fragment {
         userRef.get().addOnSuccessListener(document -> {
             if (document.exists()) {
                 User user = document.toObject(User.class);
+
+                // تحديث القيم داخل الكائن (كما كان عندك)
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
                 user.setUserName(userName);
@@ -166,32 +168,48 @@ public class EditUserDetailsFragment extends Fragment {
                 if (selectedImageUri != null) {
                     StorageReference ref = FirebaseStorage.getInstance()
                             .getReference("profile_images/" + uid + ".jpg");
+
                     ref.putFile(selectedImageUri)
                             .continueWithTask(task -> ref.getDownloadUrl())
                             .addOnSuccessListener(uri -> {
+
                                 user.setPhoto(uri.toString());
-                                userRef.set(user)
-                                        .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(getActivity(), "Data updated successfully!", Toast.LENGTH_SHORT).show();
-                                            MainActivity mainActivity = (MainActivity) getActivity();
-                                            if (mainActivity != null)
-                                                mainActivity.gotoUserHomePgFragment();
-                                        })
-                                        .addOnFailureListener(e ->
-                                                Toast.makeText(getActivity(), "Failed to update data", Toast.LENGTH_SHORT).show());
+
+                                // ✅ تم التغيير هنا: استخدمنا update بدل set (حتى لا تُحذف الـ arrays)
+                                userRef.update(
+                                        "firstName", user.getFirstName(),
+                                        "lastName", user.getLastName(),
+                                        "userName", user.getUserName(),
+                                        "phoneNum", user.getPhoneNum(),
+                                        "address", user.getAddress(),
+                                        "photo", user.getPhoto()
+                                ).addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(getActivity(), "Data updated successfully!", Toast.LENGTH_SHORT).show();
+                                    MainActivity mainActivity = (MainActivity) getActivity();
+                                    if (mainActivity != null)
+                                        mainActivity.gotoUserHomePgFragment();
+                                }).addOnFailureListener(e ->
+                                        Toast.makeText(getActivity(), "Failed to update data", Toast.LENGTH_SHORT).show());
                             })
                             .addOnFailureListener(e ->
                                     Toast.makeText(getActivity(), "Failed to upload image", Toast.LENGTH_SHORT).show());
+
                 } else {
-                    userRef.set(user)
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(getActivity(), "Data updated successfully!", Toast.LENGTH_SHORT).show();
-                                MainActivity mainActivity = (MainActivity) getActivity();
-                                if (mainActivity != null)
-                                    mainActivity.gotoAllPiecesFragment();
-                            })
-                            .addOnFailureListener(e ->
-                                    Toast.makeText(getActivity(), "Failed to update data", Toast.LENGTH_SHORT).show());
+
+                    // ✅ تم التغيير هنا أيضاً: استبدلنا set بـ update
+                    userRef.update(
+                            "firstName", user.getFirstName(),
+                            "lastName", user.getLastName(),
+                            "userName", user.getUserName(),
+                            "phoneNum", user.getPhoneNum(),
+                            "address", user.getAddress()
+                    ).addOnSuccessListener(aVoid -> {
+                        Toast.makeText(getActivity(), "Data updated successfully!", Toast.LENGTH_SHORT).show();
+                        MainActivity mainActivity = (MainActivity) getActivity();
+                        if (mainActivity != null)
+                            mainActivity.gotoUserHomeFragment();
+                    }).addOnFailureListener(e ->
+                            Toast.makeText(getActivity(), "Failed to update data", Toast.LENGTH_SHORT).show());
                 }
 
             } else {

@@ -84,7 +84,7 @@ public class UserHomePgFragment extends Fragment {
             args.putParcelable("pieces", selectedPiece);
             args.putString("pieceDocId", selectedPiece.getPieceId());
 
-            // 👇 هذا هو المهم
+            // هذا هو المهم
             args.putString("from", "home");
 
             PieceDetailsFragment fragment = new PieceDetailsFragment();
@@ -168,9 +168,19 @@ public class UserHomePgFragment extends Fragment {
                     .document(mAuth.getCurrentUser().getUid()).get()
                     .addOnSuccessListener(doc -> {
                         if (doc.exists() && doc.getString("photo") != null) {
-                            Picasso.get().load(doc.getString("photo"))
-                                    .placeholder(android.R.drawable.ic_menu_gallery)
-                                    .fit().centerCrop().into(imgUserHome);
+                            String photoUrl = doc.getString("photo");
+
+                            if (photoUrl != null && !photoUrl.isEmpty()) {
+
+                                Picasso.get().load(photoUrl)
+                                        .placeholder(android.R.drawable.ic_menu_gallery)
+                                        .fit().centerCrop()
+                                        .into(imgUserHome);
+
+                            } else {
+
+                                imgUserHome.setImageResource(android.R.drawable.ic_menu_gallery);
+                            }
                         }
                     });
         }
@@ -302,7 +312,10 @@ public class UserHomePgFragment extends Fragment {
 
                         // هنا يمكنك لاحقًا فتح Dialog كلمة مرور
                         mAuth.signOut();
-                        ((MainActivity) getActivity()).gotoLogInFragment();
+                        MainActivity activity = (MainActivity) getActivity(); // NEW
+                        if (activity != null) { // NEW
+                            activity.gotoLogInFragment(); // NEW
+                        }
 
                     } else {
                         handleError("Auth delete failed", e);
@@ -318,8 +331,9 @@ public class UserHomePgFragment extends Fragment {
         try {
             mAuth.signOut();
 
-            if (getActivity() != null) {
-                ((MainActivity) getActivity()).gotoAllPiecesFragment();
+            MainActivity activity = (MainActivity) getActivity(); // NEW
+            if (activity != null) { // NEW
+                activity.gotoAllPiecesFragment(); // NEW
             }
 
             Toast.makeText(getContext(), "Account deleted successfully", Toast.LENGTH_SHORT).show();
@@ -337,5 +351,10 @@ public class UserHomePgFragment extends Fragment {
                     tag + ": " + (e.getMessage() != null ? e.getMessage() : "Unknown error"),
                     Toast.LENGTH_LONG).show();
         }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("FRAG", "Destroyed: " + this.getClass().getSimpleName());
     }
 }

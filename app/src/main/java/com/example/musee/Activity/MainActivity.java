@@ -72,15 +72,12 @@ public class MainActivity extends AppCompatActivity {
             // Check if user is signed in (non-null).
             FirebaseUser currentUser = mAuth.getCurrentUser();
 
-            // This 'if/else' is the key.
             if (currentUser == null) {
-                // If no user is logged in, show the login page.
+                // إذا لم يوجد مستخدم
                 gotoAllPiecesFragment();
-            } else {
-                // If a user IS logged in, show the main content page.
-                // This fixes the white screen and the login loop.
-                gotoAllPiecesFragment();
-            }
+
+            } else
+                    gotoUserHomeFragment();
         }
     }
 
@@ -148,4 +145,5 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.frameLayOutMain, new CheckOutFragment());// ادخال من والى
         ft.commit();
     }
+
 }
