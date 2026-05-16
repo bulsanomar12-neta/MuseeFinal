@@ -21,13 +21,11 @@
             android:name=".Activity.MainActivity"
             android:exported="true">
 
-            <!-- فلتر تشغيل التطبيق (لا تلمسه) -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- فلتر العودة من بايبال (هذا هو المكان الصحيح) -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

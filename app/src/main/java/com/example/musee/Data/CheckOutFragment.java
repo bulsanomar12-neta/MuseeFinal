@@ -151,7 +151,7 @@ public class CheckOutFragment extends Fragment {
                 total += Double.parseDouble(piece.getPrice());
             } catch (Exception e) { e.printStackTrace(); }
         }
-        tvTotal.setText("Total: " + String.format(Locale.US, "%.2f", total) + " ₪");
+        tvTotal.setText("Total: " + String.format(Locale.US, "%.2f", total) + " $");
     }
 
     private void setupPayPalAction() {
@@ -167,7 +167,8 @@ public class CheckOutFragment extends Fragment {
             // ملاحظة: التحديث في Firebase يتم فقط *بعد* الضغط على الزر وانتظار ثانيتين (محاكاة الدفع)
             v.postDelayed(() -> {
                 handlePaymentSuccess();
-                Toast.makeText(getContext(), "Purchase completed successfully! Thank you.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Purchase completed successfully! Thank you.",
+                        Toast.LENGTH_LONG).show();
             }, 2000);
         });
     }
