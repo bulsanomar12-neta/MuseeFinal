@@ -2,9 +2,12 @@ package com.example.musee.classes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.google.firebase.firestore.PropertyName;
+import com.google.firebase.firestore.IgnoreExtraProperties;////////////
 
 import androidx.annotation.NonNull;
 
+@IgnoreExtraProperties/// /////
 public class PieceClass implements Parcelable {
     private String name;
     private String category;
@@ -16,6 +19,7 @@ public class PieceClass implements Parcelable {
     private String photo;
     private String currentUsereMail;
     private String pieceId;
+    @PropertyName("isSold")
     private boolean isSold;
 
 
@@ -73,9 +77,15 @@ public class PieceClass implements Parcelable {
     public String getPrice() {return price;}
     public String getPhoto(){return photo;}
     public String getCurrentUsereMail() {return currentUsereMail;}
-    public boolean isSold() { return isSold; }
-    public void setSold(boolean sold) { isSold = sold; }
+    @PropertyName("isSold")
+    public boolean isSold() {
+        return isSold;
+    }
 
+    @PropertyName("isSold")
+    public void setSold(boolean sold) {
+        isSold = sold;
+    }
 
     // 2️⃣ أضف getter و setter
     public String getPieceId() {
