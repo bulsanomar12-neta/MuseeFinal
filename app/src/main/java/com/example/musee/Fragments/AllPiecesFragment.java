@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager; // ✅ تم إضافتها لتفعيل تصميم الشلال
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -226,7 +227,12 @@ public class AllPiecesFragment extends Fragment {
         pieces = new ArrayList<>();
 
         rvAllPiecesFragment.setHasFixedSize(true);
-        rvAllPiecesFragment.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // 🔥 التعديل الأساسي هنا: استبدال LinearLayoutManager بـ StaggeredGridLayoutManager لعرض عمودين متداخلين بشكل احترافي
+        StaggeredGridLayoutManager staggeredLayoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        staggeredLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        rvAllPiecesFragment.setLayoutManager(staggeredLayoutManager);
 
         pieces = getPieces();
 

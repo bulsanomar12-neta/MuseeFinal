@@ -1,0 +1,366 @@
+@startuml
+class com.example.musee.classes.UtilsClass {
+- {static} UtilsClass instance
+- FirebaseServices fbs
+- String imageStr
++ {static} UtilsClass getInstance()
++ void showMessageDialog(Context,String)
++ void uploadImage(Context,Uri,OnUploadCompleteListener)
+}
+
+
+interface com.example.musee.classes.UtilsClass$OnUploadCompleteListener {
+~ void onUploadComplete(Uri)
+}
+
+class com.example.musee.Fragments.ForgotPasswordFragment {
+- FirebaseServices fbs
+- EditText etMailForgotP
+- Button btForgotP
+- ImageButton tvBackToLoginForgorPasswordFragment
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} ForgotPasswordFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+}
+
+
+class com.example.musee.Activity.MainActivity {
+- Stack<Fragment> fragmentStack
+- FirebaseServices fbs
+- FirebaseAuth mAuth
+# void onCreate(Bundle)
+# void onActivityResult(int,int,Intent)
++ void onStart()
++ void gotoAllPiecesFragment()
++ void gotoLogInFragment()
++ void gotoSignUpFragment()
++ void gotoAddPieceFragment()
++ void gotoUserHomePgFragment()
++ void gotoEditUserDetailsFragment()
++ void gotoForgotPasswordFragment()
++ void gotoUserHomeFragment()
++ void gotoCheckOutFragment()
+}
+
+
+class com.example.musee.classes.FirebaseServices {
+- {static} FirebaseServices instance
+- FirebaseAuth auth
+- FirebaseFirestore fire
+- FirebaseStorage storage
+- Uri selectedImageURL
+- boolean userChangeFlag
+- ArrayList<User> users
+- StorageReference storageRef
++ Uri getSelectedImageURL()
++ void setSelectedImageURL(Uri)
++ FirebaseStorage getStorage()
++ FirebaseFirestore getFire()
++ FirebaseAuth getAuth()
++ {static} FirebaseServices getInstance()
++ void setUserChangeFlag(boolean)
++ ArrayList<User> getUsers()
++ void setUsers(ArrayList<User>)
++ void updateUser(User)
++ void updateUser(User,OnSuccessListener<Void>,OnFailureListener)
+}
+
+
+class com.example.musee.Data.SignUpFragment {
+- {static} int GALLERY_REQUEST_CODE
+- {static} int LOCATION_PERMISSION_REQUEST_CODE
+- EditText etEmailSignUp
+- ImageView imgUserSignUp
+- Button btSignUp
+- ImageButton btnBackFromSignUpToAll
+- FirebaseServices fbs
+- UtilsClass util
+- Uri selectedImage
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} SignUpFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
++ void onSaveInstanceState(Bundle)
++ void gotoAllPieces()
++ void gotoLogIn()
++ void openGallery()
++ void onActivityResult(int,int,Intent)
+}
+
+
+class com.example.musee.Data.AddPieceFragment {
+- EditText etNameAddPieceFragment
+- {static} int GALLERY_REQUEST_CODE
+~ Spinner etSizeAddPieceFragment
+- Button btAddPieceFragment
+- ImageButton btnBackAddPieceFragment
+- FirebaseServices fbs
+- UtilsClass utils
+- ImageView imgVImageAddPieceFragment
+- Uri selectedImageUri
+- Context context
+- ActivityResultLauncher<Intent> pickImageLauncher
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void connectComponents()
+- void addToFirestore()
++ void gotoAllPieces()
+- void openGallery()
+}
+
+
+class com.example.musee.Adapters.AllPiecesAdapter {
+~ ArrayList<PieceClass> allPieces
+~ Context context
+- AllPiecesAdapter.OnItemClickListener itemClickListener
+- FirebaseServices fbs
++ AllPiecesAdapter.MyViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(AllPiecesAdapter.MyViewHolder,int)
++ int getItemCount()
++ void setOnItemClickListener(AllPiecesAdapter.OnItemClickListener)
+}
+
+
+interface com.example.musee.Adapters.AllPiecesAdapter$OnItemClickListener {
+~ void onItemClick(int)
+}
+
+class com.example.musee.Adapters.AllPiecesAdapter$MyViewHolder {
+~ TextView namea
+~ ImageView imga
+}
+
+class com.example.musee.Fragments.LogInFragment {
+- EditText etUserName
+- TextView tvForgotPasswordLogIn
+- Button btLogIn
+- ImageButton btnBackToAllFromLoginFragment
+- FirebaseServices fbs
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} LogInFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+}
+
+
+class com.example.musee.Data.EditUserDetailsFragment {
+- {static} int GALLERY_REQUEST_CODE
+- {static} int LOCATION_PERMISSION_REQUEST_CODE
+- EditText etFirstNameEditUserDetails
+- Button btUpdateEditUserDetails
+- ImageButton btnBackEditUserDetails
+- ImageView imgUserEditUserDetails
+- FirebaseServices fbs
+- UtilsClass util
+- LocationManager locationManager
+- Uri selectedImageUri
+- boolean flagAlreadyFilled
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} EditUserDetailsFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void fillUserData()
+- void updateUserData()
++ void openGallery()
++ void onActivityResult(int,int,Intent)
+}
+
+
+class com.example.musee.classes.User {
+- String firstName
+- String lastName
+- String userName
+- String phoneNum
+- String address
+- String photo
+- String eMail
+- ArrayList<String> userPieces
+- ArrayList<String> userPiecesCart
++ String toString()
++ String getFirstName()
++ void setFirstName(String)
++ String getLastName()
++ void setLastName(String)
++ String getUserName()
++ void setUserName(String)
++ String getPhoneNum()
++ void setPhoneNum(String)
++ String getAddress()
++ void setAddress(String)
++ String geteMail()
++ void seteMail(String)
++ String getPhoto()
++ void setPhoto(String)
++ ArrayList<String> getUserPieces()
++ void setUserPieces(ArrayList<String>)
++ ArrayList<String> getUserPiecesCart()
++ void setUserPiecesCart(ArrayList<String>)
+}
+
+
+class com.example.musee.Fragments.UserHomePgFragment {
+- Button btGoToAllUserHomePgFragment
+- MaterialButton btGoToAddUserHomePgFragmint
+- View btEditDetailsUserHomePgFragmint
+- ImageView imgMenuOptions
+- FirebaseAuth mAuth
+- RecyclerView rvUserPieces
+- AllPiecesAdapter userPiecesAdapter
+- ArrayList<PieceClass> userPiecesList
+- ArrayList<String> cartIdsList
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
+- void init(View)
+- void loadDataFromFirestore()
+- void fetchUserPieces(List<String>)
+- void loadUserImage()
+- void showMyMenu(MainActivity)
+- void showDeleteDialog()
+- void safeDeleteAccount()
+- void deletePiecesSafe(FirebaseFirestore,String,Runnable)
+- void deleteAuthSafe(FirebaseUser)
+- void finishDeleteFlow()
+- void handleError(String,Exception)
++ void onDestroy()
+}
+
+
+class com.example.musee.Fragments.AllPiecesFragment {
+- RecyclerView rvAllPiecesFragment
+- FirebaseServices fbs
+- AllPiecesAdapter myAdapter
+- ArrayList<PieceClass> pieces
+- Button btHomeAllPiecesFragment
+- LinearLayout searchLayout
+- EditText searchBar
+- Spinner categorySpinner
+- Button btnSearch
+- ImageButton btnSearchToggle
+- String[] categories
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} AllPiecesFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void performSearch()
+- void init(View)
++ ArrayList<PieceClass> getPieces()
+- void showNoDataDialogue()
+}
+
+
+class com.example.musee.Data.CheckOutFragment {
+- RecyclerView rvCart
+- TextView tvTotal
+- View payPalButton
+- ImageButton btnBackFromCheckout
+- AllPiecesAdapter cartAdapter
+- ArrayList<PieceClass> cartList
+- ArrayList<String> cartIds
+- FirebaseFirestore db
+- FirebaseAuth mAuth
++ {static} CheckOutFragment newInstance(ArrayList<String>)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
+- void init(View)
+- void fetchCartItems(List<String>)
+- void updateTotal()
+- void setupPayPalAction()
+- void handlePaymentSuccess()
+- void markPiecesAsSold()
+- void clearUserCart()
+}
+
+
+class com.example.musee.Fragments.PieceDetailsFragment {
+- {static} int PERMISSION_SEND_SMS
+- {static} int REQUEST_CALL_PERMISSION
+- FirebaseServices fbs
+- TextView tvArtNamePieceDetails
+- ImageView imgPieceDetails
+- PieceClass myPiece
+- Button btAddtocartlPieceDetailsFragment
+- ImageButton btnBackFromDetailsToAll
+- boolean isEnlarged
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} PieceDetailsFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
++ void init()
+}
+
+
+class com.example.musee.classes.PieceClass {
+- String name
+- String category
+- String artistName
+- String hours
+- String size
+- String information
+- String price
+- String photo
+- String currentUsereMail
+- String pieceId
+- boolean isSold
++ {static} Creator<PieceClass> CREATOR
++ String getname()
++ String getCategory()
++ String getArtistName()
++ String getHours()
++ String getSize()
++ String getInformation()
++ String getPrice()
++ String getPhoto()
++ String getCurrentUsereMail()
++ boolean isSold()
++ void setSold(boolean)
++ String getPieceId()
++ void setPieceId(String)
++ String toString()
++ void writeToParcel(Parcel,int)
++ int describeContents()
+}
+
+
+
+
+com.example.musee.classes.UtilsClass +.. com.example.musee.classes.UtilsClass$OnUploadCompleteListener
+androidx.fragment.app.Fragment <|-- com.example.musee.Fragments.ForgotPasswordFragment
+androidx.appcompat.app.AppCompatActivity <|-- com.example.musee.Activity.MainActivity
+androidx.fragment.app.Fragment <|-- com.example.musee.Data.SignUpFragment
+androidx.fragment.app.Fragment <|-- com.example.musee.Data.AddPieceFragment
+com.example.musee.Adapters.Adapter <|-- com.example.musee.Adapters.AllPiecesAdapter
+com.example.musee.Adapters.AllPiecesAdapter +.. com.example.musee.Adapters.AllPiecesAdapter$OnItemClickListener
+com.example.musee.Adapters.AllPiecesAdapter +.. com.example.musee.Adapters.AllPiecesAdapter$MyViewHolder
+com.example.musee.Adapters.ViewHolder <|-- com.example.musee.Adapters.AllPiecesAdapter$MyViewHolder
+androidx.fragment.app.Fragment <|-- com.example.musee.Fragments.LogInFragment
+androidx.fragment.app.Fragment <|-- com.example.musee.Data.EditUserDetailsFragment
+androidx.fragment.app.Fragment <|-- com.example.musee.Fragments.UserHomePgFragment
+androidx.fragment.app.Fragment <|-- com.example.musee.Fragments.AllPiecesFragment
+androidx.fragment.app.Fragment <|-- com.example.musee.Data.CheckOutFragment
+androidx.fragment.app.Fragment <|-- com.example.musee.Fragments.PieceDetailsFragment
+android.os.Parcelable <|.. com.example.musee.classes.PieceClass
+@enduml
