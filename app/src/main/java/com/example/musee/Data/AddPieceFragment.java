@@ -46,9 +46,9 @@ public class AddPieceFragment extends Fragment {
     private Button btAddPieceFragment;
     private ImageButton btnBackAddPieceFragment;
     private FirebaseServices fbs;
-    private UtilsClass utils; // ✅ تمت الإضافة (لرفع الصورة)
+    private UtilsClass utils; //  تمت الإضافة (لرفع الصورة)
     private ImageView imgVImageAddPieceFragment;
-    private Uri selectedImageUri; // ✅ تمت الإضافة (لتخزين الصورة مؤقتًا)
+    private Uri selectedImageUri; //  تمت الإضافة (لتخزين الصورة مؤقتًا)
     private Context context;
 
     private final ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
@@ -151,55 +151,6 @@ public class AddPieceFragment extends Fragment {
         });
     }
 
-/*
-    private void connectComponents() {
-        fbs = FirebaseServices.getInstance();
-        utils = UtilsClass.getInstance();// ✅ تمت الإضافة من كود الأستاذ
-
-        etNameAddPieceFragment = getView().findViewById(R.id.etNameAddPieceFragment);
-        etArtistAddPieceFragment = getView().findViewById(R.id.etArtistAddPieceFragment);
-        etHoursAddPieceFragment = getView().findViewById(R.id.etHoursAddPieceFragment);
-        etInformationAddPieceFragment = getView().findViewById(R.id.etInformationAddPieceFragment);
-        etSizeAddPieceFragment = getView().findViewById(R.id.etSizeAddPieceFragment);
-        etPriceAddPieceFragment = getView().findViewById(R.id.etPriceAddPieceFragment);
-        //button for add piece
-        btAddPieceFragment = getView().findViewById(R.id.btAddPieceFragment);
-        imgVImageAddPieceFragment = getView().findViewById(R.id.imgPieceItem);
-        spCategoryAddPiece = getView().findViewById(R.id.spCategoryAddPiece);
-        btnBackAddPieceFragment = getView().findViewById(R.id.btnBackAddPieceFragment);
-
-        btAddPieceFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // تحقق من تسجيل الدخول
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if(user == null){
-                    Toast.makeText(getActivity(), "Please log in first", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                addToFirestore();
-            }
-        });
-
-        imgVImageAddPieceFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
-
-        // برمجة زر العودة
-        btnBackAddPieceFragment.setOnClickListener(v -> {
-            if (getActivity() != null) {
-                // الحصول على MainActivity لاستخدام navigation
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity == null)
-                    return;
-                mainActivity.gotoUserHomePgFragment();
-            }
-        });
-    }
- */
 
     private void addToFirestore() {
         String name,artist,hours,information,category,size,price;

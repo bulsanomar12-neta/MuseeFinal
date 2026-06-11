@@ -113,6 +113,7 @@ public class PieceClass implements Parcelable {
                 '}';
     }
 
+    // تحويل الكائن الي شكل قابل للتنفل بين الصفحات
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(name);

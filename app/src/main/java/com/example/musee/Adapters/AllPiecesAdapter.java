@@ -28,17 +28,17 @@ public class AllPiecesAdapter extends RecyclerView.Adapter<AllPiecesAdapter.MyVi
     private AllPiecesAdapter.OnItemClickListener itemClickListener;
     private FirebaseServices fbs;
 
-    public AllPiecesAdapter(Context context, ArrayList<PieceClass> allPieces) {
+    public AllPiecesAdapter(Context context, ArrayList<PieceClass> allPieces) { //عند إنشاء الـ Adapter
         this.context = context;
-        this.allPieces = allPieces;
+        this.allPieces = allPieces;// نخزن البيانات داخل المتغير:
         this.fbs = FirebaseServices.getInstance();
         this.itemClickListener = new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 // فتح تفاصيل اللوحة
                 Bundle args = new Bundle();
-                args.putParcelable("pieces", (Parcelable) allPieces.get(position));
-                PieceDetailsFragment cd = new PieceDetailsFragment();
+                args.putParcelable("pieces", (Parcelable) allPieces.get(position)); //إرسال اللوحة المختارة إلى صفحة التفاصيل
+                PieceDetailsFragment cd = new PieceDetailsFragment();//إنشاء صفحة التفاصيل وإرسال البيانات لها
                 cd.setArguments(args);
                 FragmentTransaction ft = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frameLayOutMain, cd);
@@ -50,7 +50,7 @@ public class AllPiecesAdapter extends RecyclerView.Adapter<AllPiecesAdapter.MyVi
     @NonNull
     @Override
     public AllPiecesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // تنبيه: تأكدي أن اسم ملف الـ XML لبطاقتكِ المحدثة هو "item.xml" لكي يقرأ التعديلات
+        //إنشاء كل Card لكل لوحة
         View v = LayoutInflater.from(context).inflate(R.layout.item, parent, false);
         return new AllPiecesAdapter.MyViewHolder(v);
     }
@@ -58,7 +58,7 @@ public class AllPiecesAdapter extends RecyclerView.Adapter<AllPiecesAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull AllPiecesAdapter.MyViewHolder holder, int position) {
         PieceClass piece = allPieces.get(position);
-
+//خذ العنصر الحالي من القائمة
         holder.namea.setText(piece.getname());
         holder.artista.setText(piece.getArtistName());
         holder.siza.setText(piece.getSize());
@@ -73,7 +73,7 @@ public class AllPiecesAdapter extends RecyclerView.Adapter<AllPiecesAdapter.MyVi
         if (piece.getPhoto() == null || piece.getPhoto().isEmpty()) {
             // يمكنكِ وضع صورة افتراضية هنا إذا أردتِ مستقبلاً
         } else {
-            // 🔥 التعديل هنا: نترك بيكاسو يحمل أبعاد اللوحة الفنية الحقيقية مرناً ليتعاون مع نمط الشلال (Staggered Grid)
+            //  التعديل هنا: نترك بيكاسو يحمل أبعاد اللوحة الفنية الحقيقية مرناً ليتعاون مع نمط الشلال (Staggered Grid)
             Picasso.get()
                     .load(piece.getPhoto())
                     .into(holder.imga);

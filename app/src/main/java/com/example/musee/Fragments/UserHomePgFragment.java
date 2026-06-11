@@ -69,8 +69,11 @@ public class UserHomePgFragment extends Fragment {
 
         // إعداد RecyclerView لوحاتي بشكل أفقي
         rvUserPieces = view.findViewById(R.id.rvUserPiecesHomePgFragment);
-        LinearLayoutManager horizontalMgr = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        rvUserPieces.setLayoutManager(horizontalMgr);
+        LinearLayoutManager horizontalMgr =
+                new LinearLayoutManager(getContext(),//الحصول على ابيانات / المحتوى
+                        LinearLayoutManager.HORIZONTAL,// هذا السطر المسؤول عن تحديد الاتجاه HORIZONTAL افقي بالوضع الطبيعي VERTICAL
+                        false);
+        rvUserPieces.setLayoutManager(horizontalMgr);//رتّب العناصر في خط واحد أفقي، وإذا زاد عددها عن مساحة الشاشة اسمح بالتمرير (Scroll) أفقياً
 
         userPiecesList = new ArrayList<>();
         userPiecesAdapter = new AllPiecesAdapter(getContext(), userPiecesList);
@@ -117,7 +120,7 @@ public class UserHomePgFragment extends Fragment {
         });
 
         // فتح القائمة الجانبية
-        imgMenuOptions.setOnClickListener(v -> showMyMenu(mainActivity));
+        imgMenuOptions.setOnClickListener(v -> showMyMenu(mainActivity));// v -> اختصار لonclicklistener
 
         btGoToAllUserHomePgFragment.setOnClickListener(v -> mainActivity.gotoAllPiecesFragment());
         btGoToAddUserHomePgFragmint.setOnClickListener(v -> mainActivity.gotoAddPieceFragment());
@@ -187,20 +190,22 @@ public class UserHomePgFragment extends Fragment {
     }
 
     // قائمة الخيارات (تسجيل خروج / حذف حساب)
-    private void showMyMenu(MainActivity mainActivity) {
-        PopupMenu popup = new PopupMenu(getContext(), imgMenuOptions);
-        popup.getMenu().add("Sign Out");
-        popup.getMenu().add("Delete Account");
-        popup.setOnMenuItemClickListener(item -> {
-            if (item.getTitle().equals("Sign Out")) {
-                mAuth.signOut();
-                mainActivity.gotoLogInFragment();
-            } else if (item.getTitle().equals("Delete Account")) {
-                showDeleteDialog();
+    private void showMyMenu(MainActivity mainActivity) { // دالة عرض القائمة
+        PopupMenu popup = new PopupMenu(getContext(), imgMenuOptions); // إنشاء PopupMenu
+        popup.getMenu().add("Sign Out"); // إضافة خيار تسجيل الخروج
+        popup.getMenu().add("Delete Account"); // إضافة خيار حذف الحساب
+
+        popup.setOnMenuItemClickListener(item -> { // عند اختيار عنصر من القائمة
+            if (item.getTitle().equals("Sign Out")) { // إذا ضغط Sign Out
+                mAuth.signOut(); // تسجيل خروج من Firebase
+                mainActivity.gotoLogInFragment(); // الانتقال لصفحة تسجيل الدخول
+            }
+            else if (item.getTitle().equals("Delete Account")) { // إذا ضغط Delete Account
+                showDeleteDialog(); // فتح نافذة تأكيد الحذف
             }
             return true;
         });
-        popup.show();
+        popup.show(); // إظهار القائمة
     }
 
     private void showDeleteDialog() {
@@ -214,7 +219,6 @@ public class UserHomePgFragment extends Fragment {
 
     // نظام الحذف الآمن (يحذف كل شيء خطوة خطوة)
     private void safeDeleteAccount() {
-
         if (mAuth.getCurrentUser() == null) return;
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -295,12 +299,9 @@ public class UserHomePgFragment extends Fragment {
 
     // Dialog تأكيد حذف الحساب
     private void deleteAuthSafe(FirebaseUser user) {
-
         user.delete()
                 .addOnSuccessListener(unused -> {
-
                     finishDeleteFlow();
-
                 })
                 .addOnFailureListener(e -> {
 
@@ -327,13 +328,12 @@ public class UserHomePgFragment extends Fragment {
 
     // إنهاء عملية حذف الحساب بعد النجاح
     private void finishDeleteFlow() {
-
         try {
             mAuth.signOut();
 
-            MainActivity activity = (MainActivity) getActivity(); // NEW
-            if (activity != null) { // NEW
-                activity.gotoAllPiecesFragment(); // NEW
+            MainActivity activity = (MainActivity) getActivity();
+            if (activity != null) {
+                activity.gotoAllPiecesFragment();
             }
 
             Toast.makeText(getContext(), "Account deleted successfully", Toast.LENGTH_SHORT).show();

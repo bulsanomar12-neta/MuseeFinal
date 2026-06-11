@@ -118,7 +118,7 @@ public class PieceDetailsFragment extends Fragment {
         btEmailPieceDetailsFragment = getView().findViewById(R.id.btEmailPieceDetailsFragment);
         btnBackFromDetailsToAll = getView().findViewById(R.id.btnBackFromDetailsToAll);
 
-        Bundle args = getArguments();
+        Bundle args = getArguments(); //استرداد البيانات
         if (args != null) {
             myPiece = args.getParcelable("pieces");
             if (myPiece != null) {

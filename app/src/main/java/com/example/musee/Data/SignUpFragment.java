@@ -290,7 +290,7 @@ public class SignUpFragment extends Fragment {
             // 1. عرض الصورة في الـ ImageView
             imgUserSignUp.setImageURI(selectedImage);
 
-            // 2. هذه الخطوة هامة جداً: إزالة اللون البني (tint) برمجياً عند اختيار صورة
+            // 2إزالة اللون البني (tint) برمجياً عند اختيار صورة
             imgUserSignUp.setImageTintList(null);
 
             // 3. حفظ الصورة في كلاس الخدمات

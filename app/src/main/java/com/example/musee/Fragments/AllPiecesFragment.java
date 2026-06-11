@@ -36,13 +36,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AllPiecesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AllPiecesFragment extends Fragment {
 
+public class AllPiecesFragment extends Fragment {
 
     private RecyclerView rvAllPiecesFragment;
     private FirebaseServices fbs;
@@ -62,8 +57,6 @@ public class AllPiecesFragment extends Fragment {
             "pencil drawing", "digital drawing", "other.."};
 
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -107,8 +100,7 @@ public class AllPiecesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_all_pieces, container, false);
-
-        init(view); // ✅ أهم سطر
+        init(view); //  أهم سطر
 
         // --- SEARCH UI ---
         searchLayout = view.findViewById(R.id.searchLayout);
@@ -136,7 +128,7 @@ public class AllPiecesFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeSpinner.setAdapter(adapter);
 
-        btnSearchToggle.setOnClickListener(v -> {
+        btnSearchToggle.setOnClickListener(v -> { //إظهار/إخفاء البحث
             if (searchLayout.getVisibility() == View.GONE)
                 searchLayout.setVisibility(View.VISIBLE);
             else
@@ -163,9 +155,9 @@ public class AllPiecesFragment extends Fragment {
         String defaultSize = getResources().getStringArray(R.array.types_array_size)[0];
         boolean sizeFlag = !sz.equals(defaultSize);
 
-        filteredList.clear();
+        filteredList.clear();//تفريغ النتائج القديمة قبل البحث الجديد
 
-        for (PieceClass piece : pieces) {
+        for (PieceClass piece : pieces) {//المرور على القطع
             boolean matchName = text.isEmpty() || piece.getname().toLowerCase().contains(text);
             boolean matchCategory = !catFlag || piece.getCategory().equalsIgnoreCase(cat);
             boolean matchSize = !sizeFlag || piece.getSize().equalsIgnoreCase(sz);
@@ -195,7 +187,7 @@ public class AllPiecesFragment extends Fragment {
             return; // Exit if the activity or view is not available
         }
 
-        // 🔥 التعديل هنا فقط: استخدام view بدل getView()
+        //  التعديل هنا فقط: استخدام view بدل getView()
         btHomeAllPiecesFragment = view.findViewById(R.id.btnHomeAllPiecesFragment);
         btHomeAllPiecesFragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,16 +200,13 @@ public class AllPiecesFragment extends Fragment {
                     // If no user is logged in, show the login page.
                     mainActivity.gotoLogInFragment();
                 } else {
-                    // If a user IS logged in, show the main content page.
-                    // This fixes the white screen and the login loop.
                     mainActivity.gotoUserHomePgFragment();
                 }
             }
         });
 
-        // 🔥 نفس التعديل هنا
+        //  نفس التعديل هنا
         rvAllPiecesFragment = view.findViewById(R.id.rvAllPiecesFragment);
-        //ivProfile = getView().findViewById(R.id.ivProfileCarListMapFragment);
 
         fbs = FirebaseServices.getInstance();
         fbs.setUserChangeFlag(false);
@@ -228,14 +217,14 @@ public class AllPiecesFragment extends Fragment {
 
         rvAllPiecesFragment.setHasFixedSize(true);
 
-        // 🔥 التعديل الأساسي هنا: استبدال LinearLayoutManager بـ StaggeredGridLayoutManager لعرض عمودين متداخلين بشكل احترافي
+        //  استبدال LinearLayoutManager بـ StaggeredGridLayoutManager لعرض عمودين متداخلين بشكل احترافي
         StaggeredGridLayoutManager staggeredLayoutManager =
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        staggeredLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
-        rvAllPiecesFragment.setLayoutManager(staggeredLayoutManager);
+        staggeredLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);//استراتيجية الفراغات
+        rvAllPiecesFragment.setLayoutManager(staggeredLayoutManager);//
 
         pieces = getPieces();
-
+//////////////////////////////////////////////////////////////////////////////////////////////////
         filteredList = new ArrayList<>();              // CHANGE
         filteredList.addAll(pieces);                   // CHANGE
         myAdapter = new AllPiecesAdapter(getActivity(), filteredList); // CHANGE

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 /*
-        // ⭐ تهيئة PayPal
+        //  تهيئة PayPal
         CheckoutConfig config = new CheckoutConfig(
                 this.getApplication(),                      // Context للتطبيق: يستخدمه PayPal SDK للوصول لإعدادات التطبيق
                 "ATe-cGOLi0mIsBCU_IVa6_OX1vaZG1HQ3z8lqKX" +
@@ -137,12 +137,6 @@ public class MainActivity extends AppCompatActivity {
     public void gotoUserHomeFragment (){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayOutMain, new UserHomePgFragment());// ادخال من والى
-        ft.commit();
-    }
-
-    public void gotoCheckOutFragment(){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayOutMain, new CheckOutFragment());// ادخال من والى
         ft.commit();
     }
 

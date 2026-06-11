@@ -78,7 +78,6 @@ public class EditUserDetailsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_edit_user_details, container, false);
 
-
         // ربط العناصر بالـ XML
         etFirstNameEditUserDetails = view.findViewById(R.id.etFirstNameEditUserDetails);
         etLastNameEditUserDetails = view.findViewById(R.id.etLastNameEditUserDetails);
@@ -123,8 +122,12 @@ public class EditUserDetailsFragment extends Fragment {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
+                        //هذا الـ object يحتوي على القيم القديمة
                         User user = documentSnapshot.toObject(User.class);
                         if (user != null) {
+                            //عرض بيانات المستخدم داخل الحقول
+                            //فقط تعرض ما في الكائن
+                            //→ لا يوجد تعديل بعد
                             etFirstNameEditUserDetails.setText(user.getFirstName());
                             etLastNameEditUserDetails.setText(user.getLastName());
                             etUserNameEditUserDetails2.setText(user.getUserName());
@@ -140,6 +143,7 @@ public class EditUserDetailsFragment extends Fragment {
     }
 
     private void updateUserData() {
+        //أخذ القيم الجديدة من الشاشة
         String firstName = etFirstNameEditUserDetails.getText().toString().trim();
         String lastName = etLastNameEditUserDetails.getText().toString().trim();
         String userName = etUserNameEditUserDetails2.getText().toString().trim();
@@ -166,6 +170,7 @@ public class EditUserDetailsFragment extends Fragment {
                 user.setAddress(address);
 
                 if (selectedImageUri != null) {
+                    //رفع الصورة إلى Firebase Storage
                     StorageReference ref = FirebaseStorage.getInstance()
                             .getReference("profile_images/" + uid + ".jpg");
 

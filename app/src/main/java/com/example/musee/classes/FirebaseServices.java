@@ -61,6 +61,7 @@ public class FirebaseServices {
         return auth;
     }
 
+    //أعطني نسخة واحدة فقط من FirebaseServices، وإذا لم تكن موجودة أنشئها
     public static FirebaseServices getInstance(){
         if (instance == null) {
             instance = new FirebaseServices();
@@ -83,29 +84,7 @@ public class FirebaseServices {
         this.users = users;
     }
 
-
-    public void updateUser(User user) {
-
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        fire.collection("users")
-                .document(uid)
-                .update(
-                        "firstName", user.getFirstName(),
-                        "lastName", user.getLastName(),
-                        "userName", user.getUserName(),
-                        "address", user.getAddress(),
-                        "phoneNum", user.getPhoneNum(),
-                        "photo", user.getPhoto(),
-                        "eMail", user.geteMail()
-                )
-                .addOnSuccessListener(aVoid -> {
-                    System.out.println("User updated successfully");
-                })
-                .addOnFailureListener(e -> {
-                    System.err.println("Error updating user: " + e);
-                });
-    }
+    
     public void updateUser(User user,
                            OnSuccessListener<Void> onSuccess,
                            OnFailureListener onFailure)
